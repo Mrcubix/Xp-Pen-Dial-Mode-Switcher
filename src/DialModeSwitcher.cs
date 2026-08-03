@@ -100,8 +100,6 @@ public class DialModeSwitcher : IPositionedPipelineElement<IDeviceReport>
             return;
         }
 
-        byte[] init = MouseModeEnabled ? _mouseModeInitData : _wheelModeInitData;
-
         // fetch the report stream
         if (device.InputDevices[0].ReportStream is not HidStream _reportStream)
         {
@@ -109,15 +107,18 @@ public class DialModeSwitcher : IPositionedPipelineElement<IDeviceReport>
             return;
         }
 
+        byte[] init = MouseModeEnabled ? _mouseModeInitData : _wheelModeInitData;
+        string mode = MouseModeEnabled ? "Mouse Mode" : "Wheel Mode";
+
         // send the init data
         try
         {
             _reportStream.Write(init);
-            Log.Write(PLUGIN_NAME, "Switched to " + (MouseModeEnabled ? "Mouse Mode" : "Wheel Mode"));
+            Log.Write(PLUGIN_NAME, $"Switched to {mode}");
         }
         catch (Exception ex)
         {
-            Log.Write(PLUGIN_NAME, $"An exception occurred while switching to {(MouseModeEnabled ? "Mouse Mode" : "Wheel Mode")}: {ex.Message}", LogLevel.Error);
+            Log.Write(PLUGIN_NAME, $"An exception occurred while switching to {mode}: {ex.Message}", LogLevel.Error);
         }
     }
 
