@@ -118,6 +118,7 @@ public class DialModeSwitcher : IPositionedPipelineElement<IDeviceReport>
         if (device.ReportStream is not HidStream _reportStream)
         {
             Log.Write(PLUGIN_NAME, "Failed to get report stream", LogLevel.Error);
+            Log.Write(PLUGIN_NAME, $"ReportStream was of type {device.ReportStream.GetType().Name}", LogLevel.Error);
             return;
         }
 
