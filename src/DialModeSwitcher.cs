@@ -18,7 +18,7 @@ public class DialModeSwitcher : IPositionedPipelineElement<IDeviceReport>
 
     private static readonly byte[] _mouseModeInitData = [ 0x02, 0xb4, 0x02, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00 ];
     private static readonly byte[] _wheelModeInitData = [ 0x02, 0xb4, 0x02, 0x01, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00 ];
-    public static readonly int[] _supportedProducts = [ 2308 ];
+    public static readonly int[] _supportedProducts = [ 2308, 2371 ];
 
     #endregion
 
