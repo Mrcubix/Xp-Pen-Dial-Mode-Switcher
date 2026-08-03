@@ -1,8 +1,8 @@
-﻿using HidSharp;
-using OpenTabletDriver;
+﻿using OpenTabletDriver;
 using OpenTabletDriver.Plugin;
 using OpenTabletDriver.Plugin.Attributes;
 using OpenTabletDriver.Plugin.DependencyInjection;
+using OpenTabletDriver.Plugin.Devices;
 using OpenTabletDriver.Plugin.Output;
 using OpenTabletDriver.Plugin.Tablet;
 
@@ -115,7 +115,7 @@ public class DialModeSwitcher : IPositionedPipelineElement<IDeviceReport>
         var device = tree.InputDevices[0];
 
         // fetch the report stream
-        if (device.ReportStream is not HidStream _reportStream)
+        if (device.ReportStream is not IDeviceEndpointStream _reportStream)
         {
             Log.Write(PLUGIN_NAME, "Failed to get report stream", LogLevel.Error);
             Log.Write(PLUGIN_NAME, $"ReportStream was of type {device.ReportStream.GetType().Name}", LogLevel.Error);
