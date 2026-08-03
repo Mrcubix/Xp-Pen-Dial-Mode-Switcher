@@ -1,0 +1,1 @@
+dotnet publish src -c Release -o build/plugin/0.6.x
