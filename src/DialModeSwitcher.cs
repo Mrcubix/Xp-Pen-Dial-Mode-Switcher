@@ -85,23 +85,37 @@ public class DialModeSwitcher : IPositionedPipelineElement<IDeviceReport>
         }
 
         // fetch the device first
-        var device = _driver.InputDevices.Where(x => x.Properties.Name == Tablet.Properties.Name).FirstOrDefault();
+        var trees = _driver.InputDevices.Where(x => x.Properties.Name == Tablet.Properties.Name);
+
+        if (!trees.Any())
+        {
+            Log.Write(PLUGIN_NAME, "Device not found", LogLevel.Error);
+            return;
+        }
+        else if (trees.Count() > 1)
+        {
+            Log.Write(PLUGIN_NAME, "Multiple devices found", LogLevel.Warning);
+        }
+
+        var tree = trees.First();
         
-        if (device == null || device.InputDevices.Count == 0)
+        if (tree == null || tree.InputDevices.Count == 0)
         {
             Log.Write(PLUGIN_NAME, "Device or endpoint not found", LogLevel.Error);
             return;
         }
 
         // check if the device is supported
-        if (device.Properties.DigitizerIdentifiers.Any(x => x.VendorID != SUPPORTED_VENDOR || _supportedProducts.Contains(x.ProductID) == false))
+        if (tree.Properties.DigitizerIdentifiers.Any(x => x.VendorID != SUPPORTED_VENDOR || _supportedProducts.Contains(x.ProductID) == false))
         {
             Log.Write(PLUGIN_NAME, "Device is not supported", LogLevel.Error);
             return;
         }
 
+        var device = tree.InputDevices[0];
+
         // fetch the report stream
-        if (device.InputDevices[0].ReportStream is not HidStream _reportStream)
+        if (device.ReportStream is not HidStream _reportStream)
         {
             Log.Write(PLUGIN_NAME, "Failed to get report stream", LogLevel.Error);
             return;
