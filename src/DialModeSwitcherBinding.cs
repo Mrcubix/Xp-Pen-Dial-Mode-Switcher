@@ -11,7 +11,7 @@ public class DialModeSwitcherBinding : DialModeSwitcherBase, IStateBinding
     public const string PLUGIN_NAME = "Dial Modes Bindings";
     private DialModeBindingsEnum _value;
     private bool _mouseModeEnabled = false;
-    private bool _modeChanged = false;
+    private bool _pressed = false;
 
     public readonly static string[] Bindings = [ "Toggle", "Mouse", "Wheel" ];
 
@@ -41,7 +41,7 @@ public class DialModeSwitcherBinding : DialModeSwitcherBase, IStateBinding
 
     public void Press(TabletReference tablet, IDeviceReport report)
     {
-        if (_modeChanged || _value == DialModeBindingsEnum.None)
+        if (_pressed || _value == DialModeBindingsEnum.None)
             return;
 
         switch (_value)
@@ -57,11 +57,11 @@ public class DialModeSwitcherBinding : DialModeSwitcherBase, IStateBinding
                 break;
         }
 
-        _modeChanged = true;
+        _pressed = true;
     }
 
     public void Release(TabletReference tablet, IDeviceReport report)
     {
-        _modeChanged = false;
+        _pressed = false;
     }
 }

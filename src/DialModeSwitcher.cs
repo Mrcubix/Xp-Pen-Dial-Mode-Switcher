@@ -15,6 +15,12 @@ public class DialModeSwitcher : DialModeSwitcherBase, IPositionedPipelineElement
 
     #region Fields
 
+    private bool _isInitialized = false;
+
+    #endregion
+
+    #region Properties
+
     public PipelinePosition Position => PipelinePosition.None;
 
     [BooleanProperty("Set Dial to Mouse Mode", ""),
@@ -38,7 +44,13 @@ public class DialModeSwitcher : DialModeSwitcherBase, IPositionedPipelineElement
         => Emit?.Invoke(value);
 
     public override void PostInitialize()
-        => SetDialMode(MouseModeEnabled);
+    {
+        if (!_isInitialized)
+        {
+            _isInitialized = true;
+            SetDialMode(MouseModeEnabled);
+        }
+    }
 
     #endregion
 }
