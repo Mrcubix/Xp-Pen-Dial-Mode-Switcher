@@ -6,7 +6,7 @@ if [ ! -d "build" ]; then
     mkdir build
 fi
 
-dotnet publish src -c Release -o build/plugin/0.6.x
+dotnet publish src -c Release -o build
 
 (
   cd build
