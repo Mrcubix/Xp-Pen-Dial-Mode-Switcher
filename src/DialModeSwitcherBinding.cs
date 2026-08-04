@@ -12,9 +12,9 @@ public class DialModeSwitcherBinding : DialModeSwitcherBase, IStateBinding
     private DialModeBindingsEnum _value;
     private bool _mouseModeEnabled = false;
 
-    public readonly static string[] Bindings = [ "Toggle", "Mouse Mode", "Wheel Mode" ];
+    public readonly static string[] Bindings = [ "Toggle", "Mouse", "Wheel" ];
 
-    [Property("Selected"), 
+    [Property("Selected Mode"), 
      DefaultPropertyValue("Toggle"),
      ToolTip("Dial Mode Bindings: \n\n" +
              "Set the wheel mode to either Mouse Mode or Wheel Mode on XP-Pen Deco Pro Small and Medium\n" +
@@ -25,7 +25,17 @@ public class DialModeSwitcherBinding : DialModeSwitcherBase, IStateBinding
     public string? Selected
     {
         get => Bindings[(int)_value];
-        set => _value = Enum.Parse<DialModeBindingsEnum>(value ?? "None");
+        set
+        {
+            try
+            {
+                _value = Enum.Parse<DialModeBindingsEnum>(value ?? "None");
+            }
+            catch(Exception ex)
+            {
+                Log.Write(PLUGIN_NAME, $"An exception occurred while parsing Selected Mode: {ex.Message}", LogLevel.Error);
+            }
+        } 
     }
 
     public void Press(TabletReference tablet, IDeviceReport report)
