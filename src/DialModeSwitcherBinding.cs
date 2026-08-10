@@ -41,7 +41,7 @@ public class DialModeSwitcherBinding : DialModeSwitcherBase, IStateBinding
 
     public void Press(TabletReference tablet, IDeviceReport report)
     {
-        if (_pressed || _value == DialModeBindingsEnum.None)
+        if (_pressed || _value == DialModeBindingsEnum.None || _isCompatible == false)
             return;
 
         switch (_value)

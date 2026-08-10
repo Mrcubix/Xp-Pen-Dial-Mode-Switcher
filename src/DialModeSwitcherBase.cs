@@ -26,6 +26,7 @@ public class DialModeSwitcherBase
     protected IDeviceEndpointStream _reportStream = null!;
     protected TabletReference _tablet = null!;
     protected Driver _driver = null!;
+    protected bool _isCompatible;
 
     #endregion
 
@@ -40,7 +41,7 @@ public class DialModeSwitcherBase
             if (value is TabletReference tablet)
             {
                 _tablet = tablet;
-                Initialize();
+                _isCompatible = Initialize();
                 PostInitialize();
             }
         }

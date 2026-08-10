@@ -45,7 +45,7 @@ public class DialModeSwitcher : DialModeSwitcherBase, IPositionedPipelineElement
 
     public override void PostInitialize()
     {
-        if (!_isInitialized)
+        if (!_isInitialized && _isCompatible)
         {
             _isInitialized = true;
             SetDialMode(MouseModeEnabled);
