@@ -63,6 +63,9 @@ public class DialModeSwitcherBase
 
     public bool Initialize()
     {
+        if (_reportStream != null)
+            return true;
+
         if (_tablet == null || _driver == null)
         {
             Log.Write(PLUGIN_NAME, "Tablet or Driver is null", LogLevel.Error);
